@@ -58,6 +58,8 @@ fun ListeningDetailScreen(
     correct: Int,
     total: Int,
     dark: Boolean,
+    muted: Boolean,
+    onToggleMuted: () -> Unit,
     onBackToList: () -> Unit,
     onTogglePlayPause: () -> Unit,
     onRateChange: (Float) -> Unit,
@@ -198,9 +200,25 @@ fun ListeningDetailScreen(
                         Text(text = "Phát lại", fontSize = 11.sp, fontWeight = FontWeight.Bold, color = C.text2, fontFamily = NunitoFontFamily)
                     }
                 }
-            }
 
-            if (item.wordBox.isNotEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .size(34.dp)
+                        .background(
+                            if (muted) Color(0x1AEF4444) else Color(0x146366F1),
+                            CircleShape
+                        )
+                        .border(1.5.dp, if (muted) Color(0x52EF4444) else C.borderQ, CircleShape)
+                        .clickable(onClick = onToggleMuted)
+                        .semantics { contentDescription = if (muted) "Bật âm thanh" else "Tắt âm thanh" },
+                    contentAlignment = Alignment.Center
+                ) {
+                    DashboardIcon(
+                        name = if (muted) "volumeOff" else "volumeOn",
+                        size = 15.dp,
+                        color = if (muted) Color(0xFFEF4444) else Color(0xFF6366F1)
+                    )
+                }
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()

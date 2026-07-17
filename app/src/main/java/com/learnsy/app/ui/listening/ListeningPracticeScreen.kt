@@ -27,6 +27,7 @@ fun ListeningPracticeScreen(
     val isPlaying by viewModel.isPlaying.collectAsState()
     val speechRate by viewModel.speechRate.collectAsState()
     val isRestarting by viewModel.isRestarting.collectAsState()
+    val muted by viewModel.muted.collectAsState()
 
     val current = selected
     if (current == null) {
@@ -56,6 +57,8 @@ fun ListeningPracticeScreen(
             correct = correct,
             total = total,
             dark = dark,
+            muted = muted,
+            onToggleMuted = { viewModel.toggleMuted() },
             onBackToList = { viewModel.closeItem() },
             onTogglePlayPause = { viewModel.togglePlayPause() },
             onRateChange = { viewModel.setSpeechRate(it) },

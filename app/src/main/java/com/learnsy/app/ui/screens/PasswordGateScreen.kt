@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
@@ -21,6 +20,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.learnsy.app.ui.branding.TaNaLogo
 import com.learnsy.app.ui.theme.NunitoFontFamily
 import com.learnsy.app.ui.theme.rememberShakeOffset
 import kotlinx.coroutines.launch
@@ -77,12 +77,7 @@ fun PasswordGateScreen(
                 .padding(28.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Icon(
-                imageVector = Icons.Default.Lock,
-                contentDescription = null,
-                tint = Color(0xFFF472B6),
-                modifier = Modifier.size(48.dp)
-            )
+            TaNaLogo(size = 84.dp, fontSize = 26.sp)
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -166,7 +161,7 @@ fun PasswordGateScreen(
                     )
                 } else {
                     Text(
-                        text = "Vào Learnsy",
+                        text = "Vào TA&NA",
                         fontFamily = NunitoFontFamily,
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp

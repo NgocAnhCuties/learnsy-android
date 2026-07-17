@@ -92,12 +92,18 @@ class ListeningViewModel(application: Application) : AndroidViewModel(applicatio
     private val _isRestarting = MutableStateFlow(false)
     val isRestarting: StateFlow<Boolean> = _isRestarting.asStateFlow()
 
+    // Dùng chung trạng thái mute với QuizAudioEngine (đồng bộ DataStore "qp_muted")
+    // — tắt tiếng ở Listening cũng tắt luôn tiếng click/sfx dùng chung engine này.
+    private val _muted = MutableStateFlow(false)
+    val muted: StateFlow<Boolean> = _muted.asStateFlow()
+
     init {
         tts.setListeners(
             onStart = { _isPlaying.value = true; _isRestarting.value = false },
             onEnd = { _isPlaying.value = false; _isRestarting.value = false },
             onError = { _isPlaying.value = false; _isRestarting.value = false }
         )
+        viewModelScope.launch { _muted.value = audio.isMuted() }
         loadItems()
     }
 
@@ -203,8 +209,21 @@ class ListeningViewModel(application: Application) : AndroidViewModel(applicatio
         _stmtSel.value = list
     }
 
+    fun toggleMuted() {
+        val next = !_muted.value
+        _muted.value = next
+        audio.setMuted(next)
+        if (next) {
+            // Tắt tiếng: dừng ngay giọng đọc đang phát (nếu có)
+            tts.stop()
+            _isPlaying.value = false
+            _isRestarting.value = false
+        }
+    }
+
     fun togglePlayPause() {
         val sel = _selected.value ?: return
+        if (_muted.value) return
         if (tts.isSpeaking()) {
             tts.pause()
         } else {
@@ -224,6 +243,7 @@ class ListeningViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun restart() {
         val sel = _selected.value ?: return
+        if (_muted.value) return
         tts.stop()
         _isPlaying.value = false
         _isRestarting.value = true

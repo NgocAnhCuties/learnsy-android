@@ -1449,8 +1449,58 @@ object DashboardIconPaths {
     }.build()
 }
 
+/** Icon âm lượng (bật/tắt tiếng) — tách object riêng để không phải sửa lại toàn bộ
+ *  danh sách icon gốc phía trên. */
+private object DashboardIconPaths2 {
+    fun volumeOn(): ImageVector = Builder(
+        name = "volumeOn", defaultWidth = 24.dp, defaultHeight = 24.dp,
+        viewportWidth = 24f, viewportHeight = 24f
+    ).apply {
+        path(
+            fill = null, stroke = SolidColor(Color.Black), strokeLineWidth = 2f,
+            strokeLineCap = StrokeCap.Round, strokeLineJoin = StrokeJoin.Round
+        ) {
+            moveTo(11f, 5f); lineTo(6f, 9f); lineTo(2f, 9f); lineTo(2f, 15f); lineTo(6f, 15f)
+            lineTo(11f, 19f)
+            close()
+        }
+        path(fill = null, stroke = SolidColor(Color.Black), strokeLineWidth = 2f, strokeLineCap = StrokeCap.Round) {
+            moveTo(15.54f, 8.46f)
+            curveTo(16.4774f, 9.3968f, 17.004f, 10.6656f, 17.004f, 11.99f)
+            curveTo(17.004f, 13.3144f, 16.4774f, 14.5833f, 15.54f, 15.52f)
+        }
+        path(fill = null, stroke = SolidColor(Color.Black), strokeLineWidth = 2f, strokeLineCap = StrokeCap.Round) {
+            moveTo(19.07f, 4.93f)
+            curveTo(20.9447f, 6.8054f, 21.9979f, 9.3486f, 21.9979f, 12f)
+            curveTo(21.9979f, 14.6514f, 20.9447f, 17.1946f, 19.07f, 19.07f)
+        }
+    }.build()
+
+    fun volumeOff(): ImageVector = Builder(
+        name = "volumeOff", defaultWidth = 24.dp, defaultHeight = 24.dp,
+        viewportWidth = 24f, viewportHeight = 24f
+    ).apply {
+        path(
+            fill = null, stroke = SolidColor(Color.Black), strokeLineWidth = 2f,
+            strokeLineCap = StrokeCap.Round, strokeLineJoin = StrokeJoin.Round
+        ) {
+            moveTo(11f, 5f); lineTo(6f, 9f); lineTo(2f, 9f); lineTo(2f, 15f); lineTo(6f, 15f)
+            lineTo(11f, 19f)
+            close()
+        }
+        path(fill = null, stroke = SolidColor(Color.Black), strokeLineWidth = 2f, strokeLineCap = StrokeCap.Round) {
+            moveTo(23f, 9f); lineTo(17f, 15f)
+        }
+        path(fill = null, stroke = SolidColor(Color.Black), strokeLineWidth = 2f, strokeLineCap = StrokeCap.Round) {
+            moveTo(17f, 9f); lineTo(23f, 15f)
+        }
+    }.build()
+}
+
 /** Danh sách tên icon hiện đã hỗ trợ — dùng để fallback về "sparkle" nếu không tìm thấy */
 private val iconBuilders: Map<String, () -> ImageVector> = mapOf(
+    "volumeOn" to DashboardIconPaths2::volumeOn,
+    "volumeOff" to DashboardIconPaths2::volumeOff,
     "home" to DashboardIconPaths::home,
     "star" to DashboardIconPaths::star,
     "heart" to DashboardIconPaths::heart,

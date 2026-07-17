@@ -154,7 +154,11 @@ fun DashboardScreen(
                 ) {
                     val logoFloatState = rememberTopBarFloat()
                     Box(modifier = Modifier.graphicsLayer { translationY = logoFloatState.value }) {
-                        DashboardIcon(name = "graduationCap", size = 18.dp, color = Color(0xFFF472B6))
+                        com.learnsy.app.ui.branding.AtomBadge(
+                            size = 18.dp,
+                            badgeColor = Color(0xFFF472B6),
+                            backgroundColor = Color.Transparent
+                        )
                     }
                     Column {
                         Text(

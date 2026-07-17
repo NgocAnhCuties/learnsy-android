@@ -26,7 +26,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.learnsy.app.ui.dashboard.DashboardIcon
 import com.learnsy.app.ui.theme.NunitoFontFamily
 import kotlin.math.roundToInt
 import kotlin.random.Random
@@ -144,7 +143,11 @@ fun GameLoadingScreen(
                         .background(Brush.linearGradient(listOf(Color(0xFF818CF8), primary)), CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
-                    DashboardIcon(name = "graduationCap", size = 34.dp, color = Color.White)
+                    com.learnsy.app.ui.branding.AtomBadge(
+                        size = 40.dp,
+                        badgeColor = Color.White,
+                        backgroundColor = Color.Transparent
+                    )
                 }
             }
 
