@@ -19,8 +19,8 @@ android {
         applicationId = "com.learnsy.app"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 3
+        versionName = "3.0"
 
         // ═══ Đọc từ local.properties — KHÔNG commit file đó lên git ═══
         buildConfigField("String", "SUPA_URL", "\"${localProps.getProperty("SUPA_URL", "")}\"")
