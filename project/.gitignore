@@ -1,0 +1,15 @@
+*.iml
+.gradle
+/local.properties
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+*.keystore
+*.jks
+!gradle/wrapper/gradle-wrapper.jar
+keystore.b64
+keystore.b64
+*.keystore
