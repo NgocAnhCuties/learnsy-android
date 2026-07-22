@@ -1,0 +1,58 @@
+name: Clear GitHub Actions Cache
+
+on:
+  # Cho phép kích hoạt thủ công từ giao diện Actions của GitHub
+  workflow_dispatch:
+    inputs:
+      cache_key:
+        description: 'Nhập Cache Key cụ thể cần xóa (bỏ trống để xóa TẤT CẢ cache)'
+        required: false
+        default: ''
+
+permissions:
+  actions: write # Bắt buộc có quyền write để xóa cache
+
+jobs:
+  clear-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Delete Caches
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CACHE_KEY: ${{ github.event.inputs.cache_key }}
+        run: |
+          GH_REPO="${{ github.repository }}"
+          
+          if [ -n "$CACHE_KEY" ]; then
+            echo "🔍 Đang tìm và xóa cache với key chứa: $CACHE_KEY"
+            gh api \
+              --method GET \
+              -H "Accept: application/vnd.github+json" \
+              "/repos/$GH_REPO/actions/caches?key=$CACHE_KEY" \
+              --jq '.actions_caches[].id' | while read -r cache_id; do
+                echo "🗑️ Đang xóa cache ID: $cache_id"
+                gh api \
+                  --method DELETE \
+                  -H "Accept: application/vnd.github+json" \
+                  "/repos/$GH_REPO/actions/caches/$cache_id"
+              done
+          else
+            echo "🔥 Không nhập key. Đang xóa TẤT CẢ cache trong repository..."
+            gh api \
+              --method GET \
+              -H "Accept: application/vnd.github+json" \
+              "/repos/$GH_REPO/actions/caches" \
+              --jq '.actions_caches[].id' | while read -r cache_id; do
+                echo "🗑️ Đang xóa cache ID: $cache_id"
+                gh api \
+                  --method DELETE \
+                  -H "Accept: application/vnd.github+json" \
+                  "/repos/$GH_REPO/actions/caches/$cache_id"
+              done
+          fi
+          
+          echo "✅ Hoàn thành xóa cache!"
+          
